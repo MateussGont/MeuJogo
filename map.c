@@ -2,12 +2,18 @@
 Map atributes, generation and effects
 */
 
-#include "ncurses.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "lib/map.h"
 
-#define WIDTH 80
-#define HEIGHT 24
+#define MAX_ROOMS 10
+#define MIN_ROOM_SIZE 5
+#define MAX_ROOM_SIZE 15
+
+typedef struct
+{
+    int x, y, width, height;
+} Room;
+
+Room rooms[MAX_ROOMS];
 
 void gerar_mapa()
 {
@@ -17,20 +23,46 @@ void gerar_mapa()
     // Cria um array para o mapa
     char map[HEIGHT][WIDTH];
 
-    // Preenche o mapa com caracteres aleatórios
+    // Inicializa o mapa com '.'
     for (int y = 0; y < HEIGHT; y++)
     {
         for (int x = 0; x < WIDTH; x++)
         {
-            if (rand() % 100 < 20)
+            map[y][x] = '.';
+        }
+    }
+
+    // Gera salas aleatórias
+    for (int i = 0; i < MAX_ROOMS; i++)
+    {
+        Room room;
+        room.width = MIN_ROOM_SIZE + rand() % (MAX_ROOM_SIZE - MIN_ROOM_SIZE + 1);
+        room.height = MIN_ROOM_SIZE + rand() % (MAX_ROOM_SIZE - MIN_ROOM_SIZE + 1);
+        room.x = rand() % (WIDTH - room.width);
+        room.y = rand() % (HEIGHT - room.height);
+
+        // Verifica a sobreposição com salas existentes
+        bool overlap = false;
+        for (int j = 0; j < i; j++)
+        {
+            if (rooms[j].x < room.x + room.width && rooms[j].x + rooms[j].width > room.x &&
+                rooms[j].y < room.y + room.height && rooms[j].y + rooms[j].height > room.y)
             {
-                // 20% de chance de ser um '#'
-                map[y][x] = '#';
+                overlap = true;
+                break;
             }
-            else
+        }
+
+        // Se não houver sobreposição, adicione a sala ao mapa
+        if (!overlap)
+        {
+            rooms[i] = room;
+            for (int y = room.y; y < room.y + room.height; y++)
             {
-                // 80% de chance de ser um '.'
-                map[y][x] = '.';
+                for (int x = room.x; x < room.x + room.width; x++)
+                {
+                    map[y][x] = '#';
+                }
             }
         }
     }
