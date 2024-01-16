@@ -15,19 +15,15 @@ int main()
 {
     // Inicializa o ncurses
     initscr();
-    // Desativa o eco de entrada
     noecho();
     // Habilita o teclado
     keypad(stdscr, TRUE);
     // Desativa o cursor
     curs_set(0);
-
     // Semeia o gerador de números aleatórios
     srand(time(NULL));
-
-    // Inicializa o mapa
+    
     gerar_mapa();
-    // Aguarda a entrada do usuário antes de sair
     getch();
 
     // Finaliza o ncurses
