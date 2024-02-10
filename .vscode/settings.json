@@ -2,6 +2,8 @@
     "files.associations": {
         "ncurses.h": "c",
         "stdlib.h": "c",
-        "map.h": "c"
+        "map.h": "c",
+        "stdio.h": "c",
+        "curses.h": "c"
     }
 }

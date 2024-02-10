@@ -9,7 +9,16 @@
 #define WIDTH 80
 #define HEIGHT 24
 
+typedef struct mapa
+{
+    char **matriz;
+    int linhas, colunas;
+} Mapa;
+
 // Declaração da função
-void gerar_mapa();
+void freematriz(Mapa *map);
+void imprime_mapa(Mapa *mapa);
+void gera_Mapa(Mapa *mapa);
+void cria_Matrix(Mapa *mapa);
 
 #endif // Fim do bloco de definição de MAPA_H

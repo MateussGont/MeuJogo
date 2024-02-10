@@ -18,5 +18,8 @@ $(EXEC): $(OBJS)
 %.o: %.c
 	$(CC) -c $< -o $@
 
+run: $(EXEC)
+	./$(EXEC)
+
 clean:
 	rm -f $(EXEC) $(OBJS)

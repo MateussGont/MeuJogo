@@ -10,7 +10,7 @@
 
 #define WIDTH 80
 #define HEIGHT 24
-
+Mapa mapa;
 int main()
 {
     // Inicializa o ncurses
@@ -22,12 +22,14 @@ int main()
     curs_set(0);
     // Semeia o gerador de números aleatórios
     srand(time(NULL));
-    
-    gerar_mapa();
-    getch();
+
+    cria_Matrix(&mapa);
+    char tecla = getch();
 
     // Finaliza o ncurses
-    endwin();
-
+    if (tecla == 'p')
+    {
+        endwin();
+    }
     return 0;
 }
